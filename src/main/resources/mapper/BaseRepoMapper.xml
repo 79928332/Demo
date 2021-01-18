@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxzy.mapper.BaseRepoMapper">
+  <resultMap id="BaseResultMap" type="com.hxzy.entity.BaseRepo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="descs" jdbcType="VARCHAR" property="descs" />
+    <result column="adminId" jdbcType="INTEGER" property="adminId" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="updatime" jdbcType="TIMESTAMP" property="updatime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, code, address, descs, adminId, updater, updatime, `state`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lz_base_repo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer">
+    delete from lz_base_repo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hxzy.entity.BaseRepo">
+    insert into lz_base_repo (id, `name`, code, 
+      address, descs, adminId, 
+      updater, updatime, `state`
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{descs,jdbcType=VARCHAR}, #{adminId,jdbcType=INTEGER}, 
+      #{updater,jdbcType=VARCHAR}, #{updatime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hxzy.entity.BaseRepo">
+    insert into lz_base_repo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="descs != null">
+        descs,
+      </if>
+      <if test="adminId != null">
+        adminId,
+      </if>
+      <if test="updater != null">
+        updater,
+      </if>
+      <if test="updatime != null">
+        updatime,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null">
+        #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null">
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatime != null">
+        #{updatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hxzy.entity.BaseRepo">
+    update lz_base_repo
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null">
+        descs = #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null">
+        adminId = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null">
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatime != null">
+        updatime = #{updatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hxzy.entity.BaseRepo">
+    update lz_base_repo
+    set `name` = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      descs = #{descs,jdbcType=VARCHAR},
+      adminId = #{adminId,jdbcType=INTEGER},
+      updater = #{updater,jdbcType=VARCHAR},
+      updatime = #{updatime,jdbcType=TIMESTAMP},
+      `state` = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="search" parameterType="com.hxzy.dto.BaseRepoDTO" resultMap="BaseResultMap">
+    SELECT lz_base_repo.id,lz_base_repo.`name`,lz_base_repo.`code`,
+    lz_base_repo.address,lz_base_repo.descs,lz_base_repo.adminId
+   FROM
+   lz_base_repo
+  <where>
+    <if test="name!=null and name!=''">
+      and `name` like concat('%',#{name,jdbcType=VARCHAR},'%')
+    </if>
+  </where>
+  </select>
+  <select id="existsValue" parameterType="com.hxzy.dto.BaseRepoDTO" resultType="int">
+    select count(0) from lz_base_repo
+    <where>
+      <if test="name!=null and name!=''">
+        and `name` like concat('%',#{name,jdbcType=VARCHAR},'%')
+      </if>
+    </where>
+  </select>
+  <select id="searchAllName" resultMap="BaseResultMap">
+    select id,`name` from lz_base_repo
+  </select>
+</mapper>

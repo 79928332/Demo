@@ -1,0 +1,21 @@
+package com.hxzy.service.impl;
+
+import com.hxzy.entity.${1};
+import com.hxzy.mapper.${1}Mapper;
+import com.hxzy.service.${1}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ${1}ServiceImpl  extends BaseServiceImpl<${1},${2}>  implements ${1}Service {
+
+    private ${1}Mapper  ${3}Mapper;
+
+    @Autowired
+    public void set${1}Mapper(${1}Mapper ${3}Mapper) {
+        this.${3}Mapper = ${3}Mapper;
+        super.setMyBatisBaseDao(${3}Mapper);
+    }
+
+
+}

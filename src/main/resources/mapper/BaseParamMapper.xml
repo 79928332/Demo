@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxzy.mapper.BaseParamMapper">
+  <resultMap id="BaseResultMap" type="com.hxzy.entity.BaseParam">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="descs" jdbcType="VARCHAR" property="descs" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="creatime" jdbcType="TIMESTAMP" property="creatime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, descs, `state`, `type`, creater, creatime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lz_base_param
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer">
+    delete from lz_base_param
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hxzy.entity.BaseParam">
+    insert into lz_base_param (id, `name`, descs, 
+      `state`, `type`, creater, 
+      creatime)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{descs,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, 
+      #{creatime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hxzy.entity.BaseParam">
+    insert into lz_base_param
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="descs != null">
+        descs,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="creater != null">
+        creater,
+      </if>
+      <if test="creatime != null">
+        creatime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null">
+        #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="creatime != null">
+        #{creatime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hxzy.entity.BaseParam">
+    update lz_base_param
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null">
+        descs = #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null">
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="creatime != null">
+        creatime = #{creatime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hxzy.entity.BaseParam">
+    update lz_base_param
+    set `name` = #{name,jdbcType=VARCHAR},
+      descs = #{descs,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=INTEGER},
+      `type` = #{type,jdbcType=VARCHAR},
+      creater = #{creater,jdbcType=VARCHAR},
+      creatime = #{creatime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="search" parameterType="com.hxzy.dto.BaseParamDTO" resultMap="BaseResultMap">
+    SELECT lz_base_param.id,lz_base_param.`name`,lz_base_param.descs,lz_base_param.state,
+    lz_base_param.type,lz_base_param.creatime,lz_base_param.creater
+    FROM
+    lz_base_param
+    <where>
+      <if test="name!=null and name!=''">
+        and lz_base_param.name like concat('%',#{name,jdbcType= VARVHAR},'%')
+      </if>
+      <if test="typeId!=null and typeId > 0">
+        and  lz_base_param.type=(select lz_base_param_type.type from lz_base_param_type where lz_base_param_type.id=#{typeId,jdbcType=INTEGER} )
+      </if>
+    </where>
+  </select>
+  <select id="searchAll" parameterType="com.hxzy.dto.BaseParamDTO" resultMap="BaseResultMap">
+    select lz_base_param.name from lz_base_param
+    where lz_base_param.type=#{type,jdbcType=VARCHAR}
+  </select>
+  <select id="existsValue" parameterType="com.hxzy.dto.BaseParamDTO" resultType="int">
+    select count(0) from lz_base_param
+    <where>
+      <if test="name!=null and name!=''">
+        and 'name'=#{name,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+</mapper>

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxzy.mapper.BaseGoodsMapper">
+  <resultMap id="BaseResultMap" type="com.hxzy.entity.BaseGoods">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="material" jdbcType="VARCHAR" property="material" />
+    <result column="buyPrice" jdbcType="VARCHAR" property="buyPrice" />
+    <result column="salePrice" jdbcType="VARCHAR" property="salePrice" />
+    <result column="descs" jdbcType="VARCHAR" property="descs" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="updatime" jdbcType="TIMESTAMP" property="updatime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hxzy.entity.BaseGoods">
+    <result column="picture" jdbcType="LONGVARCHAR" property="picture" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, code, `type`, brand, unit, color, `standard`, material, buyPrice, salePrice, 
+    descs, updater, updatime, `state`
+  </sql>
+  <sql id="Blob_Column_List">
+    picture
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from lz_base_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer">
+    delete from lz_base_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hxzy.entity.BaseGoods">
+    insert into lz_base_goods (id, `name`, code, 
+      `type`, brand, unit, 
+      color, `standard`, material, 
+      buyPrice, salePrice, descs, 
+      updater, updatime, `state`, 
+      picture)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{color,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR}, #{material,jdbcType=VARCHAR}, 
+      #{buyPrice,jdbcType=VARCHAR}, #{salePrice,jdbcType=VARCHAR}, #{descs,jdbcType=VARCHAR}, 
+      #{updater,jdbcType=VARCHAR}, #{updatime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
+      #{picture,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hxzy.entity.BaseGoods">
+    insert into lz_base_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="color != null">
+        color,
+      </if>
+      <if test="standard != null">
+        `standard`,
+      </if>
+      <if test="material != null">
+        material,
+      </if>
+      <if test="buyPrice != null">
+        buyPrice,
+      </if>
+      <if test="salePrice != null">
+        salePrice,
+      </if>
+      <if test="descs != null">
+        descs,
+      </if>
+      <if test="updater != null">
+        updater,
+      </if>
+      <if test="updatime != null">
+        updatime,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null">
+        #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="buyPrice != null">
+        #{buyPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="salePrice != null">
+        #{salePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null">
+        #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null">
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatime != null">
+        #{updatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hxzy.entity.BaseGoods">
+    update lz_base_goods
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        `standard` = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null">
+        material = #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="buyPrice != null">
+        buyPrice = #{buyPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="salePrice != null">
+        salePrice = #{salePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null">
+        descs = #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null">
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatime != null">
+        updatime = #{updatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hxzy.entity.BaseGoods">
+    update lz_base_goods
+    set `name` = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      `standard` = #{standard,jdbcType=VARCHAR},
+      material = #{material,jdbcType=VARCHAR},
+      buyPrice = #{buyPrice,jdbcType=VARCHAR},
+      salePrice = #{salePrice,jdbcType=VARCHAR},
+      descs = #{descs,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR},
+      updatime = #{updatime,jdbcType=TIMESTAMP},
+      `state` = #{state,jdbcType=INTEGER},
+      picture = #{picture,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hxzy.entity.BaseGoods">
+    update lz_base_goods
+    set `name` = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      `standard` = #{standard,jdbcType=VARCHAR},
+      material = #{material,jdbcType=VARCHAR},
+      buyPrice = #{buyPrice,jdbcType=VARCHAR},
+      salePrice = #{salePrice,jdbcType=VARCHAR},
+      descs = #{descs,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR},
+      updatime = #{updatime,jdbcType=TIMESTAMP},
+      `state` = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="search" parameterType="com.hxzy.dto.BaseGoodsSearchDTO" resultMap="BaseResultMap">
+    SELECT lz_base_goods.id,lz_base_goods.`name`, lz_base_goods.`code`,lz_base_goods.type,
+      lz_base_goods.brand,lz_base_goods.unit,lz_base_goods.color,lz_base_goods.standard,lz_base_goods.material,
+      lz_base_goods.buyPrice,lz_base_goods.salePrice,lz_base_goods.descs,lz_base_goods.picture
+    FROM
+    lz_base_goods
+    <where>
+      <if test="name!=null and name!=''">
+        and name like concat ('%',#{name,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="code!=null and code!=''">
+        and code=#{code,jdbcType=VARCHAR}
+      </if>
+      <if test="type!=null and type!=''">
+        and lz_base_goods.name like concat(#{type,jdbcType=VARCHAR}))
+      </if>
+      <if test="brand!=null and brand!=''">
+        and brand=#{brand,jdbcType=VARCHAR}
+      </if>
+      <if test="color!=null and color!=''">
+        and color=#{color,jdbcType=VARCHAR}
+      </if>
+      <if test="standard!=null and standard!=''">
+        and standard=#{standard,jdbcType=VARCHAR}
+      </if>
+      <if test="material!=null and material!=''">
+        and material=#{material,jdbcType=VARCHAR}
+      </if>
+    </where>
+
+  </select>
+  <select id="existsValue" parameterType="com.hxzy.dto.BaseGoodsSearchDTO" resultType="int">
+    select count(0) from lz_base_goods
+    <where>
+      <if test="name!=null and name!=''">
+        and lz_base_goods.name=#{name,jdbcType=VARCHAR}
+      </if>
+      <if test="code!=null and code!=''">
+        and code=#{code,jdbcType=VARCHAR}
+      </if>
+      <if test="type!=null and type!=''">
+        and 'type'=#{type,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+</mapper>

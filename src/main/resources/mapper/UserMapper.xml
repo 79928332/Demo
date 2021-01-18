@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxzy.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.hxzy.entity.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="roleId" jdbcType="INTEGER" property="roleId" />
+    <result column="roleName" jdbcType="VARCHAR" property="roleName" />
+    <result column="employeeId" jdbcType="INTEGER" property="employeeId" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="updatime" jdbcType="TIMESTAMP" property="updatime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="isLocked" jdbcType="INTEGER" property="isLocked" />
+    <result column="lockTime" jdbcType="TIMESTAMP" property="lockTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, account, `password`, roleId, roleName, employeeId, updater, updatime, `state`, 
+    isLocked, lockTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lz_sys_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lz_sys_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hxzy.entity.User">
+    insert into lz_sys_user (id, account, `password`, 
+      roleId, roleName, employeeId, 
+      updater, updatime, `state`, 
+      isLocked, lockTime)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{employeeId,jdbcType=INTEGER}, 
+      #{updater,jdbcType=VARCHAR}, #{updatime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
+      #{isLocked,jdbcType=INTEGER}, #{lockTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hxzy.entity.User">
+    insert into lz_sys_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="roleId != null">
+        roleId,
+      </if>
+      <if test="roleName != null">
+        roleName,
+      </if>
+      <if test="employeeId != null">
+        employeeId,
+      </if>
+      <if test="updater != null">
+        updater,
+      </if>
+      <if test="updatime != null">
+        updatime,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="isLocked != null">
+        isLocked,
+      </if>
+      <if test="lockTime != null">
+        lockTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null">
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatime != null">
+        #{updatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="isLocked != null">
+        #{isLocked,jdbcType=INTEGER},
+      </if>
+      <if test="lockTime != null">
+        #{lockTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hxzy.entity.User">
+    update lz_sys_user
+    <set>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        roleId = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="roleName != null">
+        roleName = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        employeeId = #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null">
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatime != null">
+        updatime = #{updatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="isLocked != null">
+        isLocked = #{isLocked,jdbcType=INTEGER},
+      </if>
+      <if test="lockTime != null">
+        lockTime = #{lockTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hxzy.entity.User">
+    update lz_sys_user
+    set account = #{account,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      roleId = #{roleId,jdbcType=INTEGER},
+      roleName = #{roleName,jdbcType=VARCHAR},
+      employeeId = #{employeeId,jdbcType=INTEGER},
+      updater = #{updater,jdbcType=VARCHAR},
+      updatime = #{updatime,jdbcType=TIMESTAMP},
+      `state` = #{state,jdbcType=INTEGER},
+      isLocked = #{isLocked,jdbcType=INTEGER},
+      lockTime = #{lockTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="search" parameterType="com.hxzy.dto.UserSearchDTO" resultMap="BaseResultMap">
+    select id, account,roleName, updatime, `state`,employeeId
+    from lz_sys_user
+    <where>
+      isLocked!=1
+      <if test="account != null and account != '' ">
+        and account like concat('%',#{account,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="roleName != null and roleName != '' ">
+        and roleName like concat('%',#{roleName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="id != null and id !='' ">
+        and id = #{id,jdbcType=CHAR}
+      </if>
+    </where>
+  </select>
+  <select id="existsValue" parameterType="com.hxzy.dto.UserSearchDTO" resultType="int">
+    select count(0) from lz_sys_user
+    <where>
+      <if test="account != null  and  account!='' ">
+        and  account=#{account,jdbcType=VARCHAR}
+      </if>
+      <if test="roleName != null  and  roleName!='' ">
+        and  roleName=#{roleName,jdbcType=VARCHAR}
+      </if>
+
+    </where>
+  </select>
+  <!-- 登录 -->
+  <select id="login" parameterType="com.hxzy.dto.UserLoginDTO" resultMap="BaseResultMap">
+    select *
+    from lz_sys_user
+    <where>
+      and  state='1'
+
+      <choose>
+        <when test="loginTypeName=='email'">
+          and email=#{loginName}
+        </when>
+        <when test="loginTypeName=='mobile'">
+          and phonenumber=#{loginName}
+        </when>
+        <otherwise>
+          and `account`=#{loginName}
+        </otherwise>
+      </choose>
+    </where>
+
+  </select>
+</mapper>

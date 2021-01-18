@@ -1,0 +1,7 @@
+package com.hxzy.service;
+
+import com.hxzy.entity.${1};
+
+public interface  ${1}Service extends BaseService<${1},${2}>{
+
+}

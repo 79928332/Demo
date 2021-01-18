@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--应该要包含  业务逻辑层，数据访问层， mybatis，数据源, 数据库配置文件 jdbc.properties，事务，事务AOP增强  -->
+
+    <!-- 1、启用注解  -->
+    <context:annotation-config/>
+
+    <!--2、启用 aop注解  -->
+    <aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+
+    <!--3、加载项目相关的  properties配置文件，放在全局共变量中 context-->
+    <context:property-placeholder location="classpath:jdbc.properties,classpath:redis.properties"></context:property-placeholder>
+
+    <!--4、加载相关的业务、数据访问相关的bean,全局扫包 -->
+    <context:component-scan base-package="com.hxzy.service,com.hxzy.util"></context:component-scan>
+
+    <!--以下开始就是集成  数据库相关的操作  -->
+     <!-- 5、集成数据库连接池，  apache-common-dbcp,  c3p0  ,  阿里druid -->
+     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"  destroy-method="close">
+         <property name="driverClassName" value="${jdbc.driver}"></property>
+         <property name="url" value="${jdbc.url}"></property>
+         <property name="username" value="${jdbc.username}"></property>
+         <property name="password" value="${jdbc.password}"></property>
+     </bean>
+
+     <!-- 6、配置事务管理类 -->
+     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+         <property name="dataSource" ref="dataSource"></property>
+     </bean>
+
+    <!--7、mybatis配置-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="configLocation" value="classpath:mybatis_conf.xml"></property>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+        <property name="typeAliasesPackage" value="com.hxzy.entity"></property>
+    </bean>
+
+    <!--8、生成mybatis代理对象(aop)  SqlSession session=MybatisUtil.getSession();UsersMapper mapper=session.getMapper(UsersMapper.class);-->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.hxzy.mapper"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!--9、声明式事式(xml配置)  、 注解式事务   区别（声明固定了方法名称，注解式 灵活）    -->
+    <!-- 开启注解方式 事务-->
+    <tx:annotation-driven></tx:annotation-driven>
+
+
+    <!-- 读取redis配置 -->
+    <import resource="classpath:spring-redis.xml"></import>
+
+</beans>

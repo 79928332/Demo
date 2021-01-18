@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxzy.mapper.SaleCustomerMapper">
+  <resultMap id="BaseResultMap" type="com.hxzy.entity.SaleCustomer">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="linkman" jdbcType="VARCHAR" property="linkman" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="descs" jdbcType="VARCHAR" property="descs" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="updatime" jdbcType="TIMESTAMP" property="updatime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, linkman, mobile, address, descs, `state`, updater, updatime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lz_sale_customer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lz_sale_customer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hxzy.entity.SaleCustomer">
+    insert into lz_sale_customer (id, `name`, linkman, 
+      mobile, address, descs, 
+      `state`, updater, updatime
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{descs,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, #{updatime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hxzy.entity.SaleCustomer">
+    insert into lz_sale_customer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="linkman != null">
+        linkman,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="descs != null">
+        descs,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="updater != null">
+        updater,
+      </if>
+      <if test="updatime != null">
+        updatime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null">
+        #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null">
+        #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null">
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatime != null">
+        #{updatime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hxzy.entity.SaleCustomer">
+    update lz_sale_customer
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null">
+        linkman = #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null">
+        descs = #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null">
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatime != null">
+        updatime = #{updatime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hxzy.entity.SaleCustomer">
+    update lz_sale_customer
+    set `name` = #{name,jdbcType=VARCHAR},
+      linkman = #{linkman,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      descs = #{descs,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=INTEGER},
+      updater = #{updater,jdbcType=VARCHAR},
+      updatime = #{updatime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="search" parameterType="com.hxzy.dto.SaleCustomerDTO" resultMap="BaseResultMap">
+    SELECT
+    id, `name`, linkman, mobile, address, descs, `state`, updater, updatime
+    FROM lz_sale_customer
+    <where>
+      <if test="name != null and name !=''">
+      and  `name` like concat('%', #{name,jdbcType=VARCHAR},'%')
+      </if>
+    </where>
+
+  </select>
+</mapper>

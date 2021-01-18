@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxzy.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.hxzy.entity.Role">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="descs" jdbcType="VARCHAR" property="descs" />
+    <result column="menuIds" jdbcType="VARCHAR" property="menuIds" />
+    <result column="menuNames" jdbcType="VARCHAR" property="menuNames" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="updatime" jdbcType="TIMESTAMP" property="updatime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, code, descs, menuIds, menuNames, `state`, updater, updatime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lz_sys_role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lz_sys_role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hxzy.vo.RoleVO">
+    insert into lz_sys_role (id, `name`, code, 
+      descs, menuIds, menuNames, 
+      `state`, updater, updatime
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{descs,jdbcType=VARCHAR}, #{menuIds,jdbcType=VARCHAR}, #{menuNames,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, #{updatime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hxzy.entity.Role">
+    insert into lz_sys_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="descs != null">
+        descs,
+      </if>
+      <if test="menuIds != null">
+        menuIds,
+      </if>
+      <if test="menuNames != null">
+        menuNames,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="updater != null">
+        updater,
+      </if>
+      <if test="updatime != null">
+        updatime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null">
+        #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIds != null">
+        #{menuIds,jdbcType=VARCHAR},
+      </if>
+      <if test="menuNames != null">
+        #{menuNames,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null">
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatime != null">
+        #{updatime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hxzy.entity.Role">
+    update lz_sys_role
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="descs != null">
+        descs = #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIds != null">
+        menuIds = #{menuIds,jdbcType=VARCHAR},
+      </if>
+      <if test="menuNames != null">
+        menuNames = #{menuNames,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null">
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatime != null">
+        updatime = #{updatime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hxzy.entity.Role">
+    update lz_sys_role
+    set `name` = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      descs = #{descs,jdbcType=VARCHAR},
+      menuIds = #{menuIds,jdbcType=VARCHAR},
+      menuNames = #{menuNames,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=INTEGER},
+      updater = #{updater,jdbcType=VARCHAR},
+      updatime = #{updatime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="search" parameterType="com.hxzy.dto.RoleSearchDTO" resultMap="BaseResultMap">
+    select id, `name`, code,
+      descs, menuNames,updatime
+    from lz_sys_role
+      <where>
+        `state`!=0
+        <if test="code != null and code != '' ">
+          and code like concat('%',#{code,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="id != null and id !='' ">
+          and id = #{id,jdbcType=CHAR}
+        </if>
+      </where>
+  </select>
+  <select id="existsValue" parameterType="com.hxzy.dto.RoleSearchDTO" resultType="int">
+    select count(0) from lz_sys_role
+    <where>
+      <if test="name != null  and  name!='' ">
+        and  `name`=#{name,jdbcType=VARCHAR}
+      </if>
+      <if test="code != null  and  code!='' ">
+        and  code=#{code,jdbcType=VARCHAR}
+      </if>
+
+    </where>
+  </select>
+  <select id="roleList" resultMap="BaseResultMap">
+    select id,`name` from lz_sys_role
+  </select>
+</mapper>
